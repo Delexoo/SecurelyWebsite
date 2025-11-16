@@ -1,0 +1,383 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>About - Securely</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #000000;
+            background: #ffffff;
+        }
+
+        nav {
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: #ffffff;
+            border-bottom: 10px solid #000000;
+            transition: all 0.3s ease;
+        }
+
+        nav.scrolled {
+            padding: 1.5rem 4rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #000000;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease;
+        }
+
+        .logo:hover {
+            transform: scale(1.05);
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: color 0.3s ease;
+        }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #000000;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 4rem;
+        }
+
+        .color-block {
+            position: absolute;
+            right: 0;
+            top: 0;
+            width: 45%;
+            height: 100%;
+            background: #4ecdc4;
+            z-index: 1;
+            animation: slideInRight 1.5s ease-out;
+        }
+
+        @keyframes slideInRight {
+            from {
+                transform: translateX(100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 12rem;
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -6px;
+            color: #000000;
+            position: relative;
+            z-index: 2;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .about-section {
+            padding: 12rem 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .content-block {
+            background: #f5f5f5;
+            border: 3px solid #000000;
+            padding: 4rem;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(50px);
+            transition: all 0.8s ease;
+        }
+
+        .content-block.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .content-block h2 {
+            font-size: 5rem;
+            font-weight: 900;
+            line-height: 1;
+            letter-spacing: -2px;
+            margin-bottom: 3rem;
+            color: #000000;
+            transition: color 0.3s ease;
+        }
+
+        .content-block.scrolled h2 {
+            color: #4ecdc4;
+        }
+
+        .content-block p {
+            font-size: 1.4rem;
+            line-height: 1.8;
+            color: #333333;
+            margin-bottom: 2rem;
+        }
+
+        .highlight-box {
+            background: #000000;
+            color: #ffffff;
+            padding: 5rem;
+            border: 3px solid #000000;
+            margin: 6rem 0;
+            opacity: 0;
+            transform: scale(0.95);
+            transition: all 0.8s ease;
+        }
+
+        .highlight-box.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .highlight-box h2 {
+            color: #ffffff;
+            font-size: 3.5rem;
+            margin-bottom: 2rem;
+        }
+
+        .highlight-box p {
+            color: #ffffff;
+            font-size: 1.3rem;
+            margin-bottom: 1.5rem;
+        }
+
+        .story-section {
+            background: #f5f5f5;
+            border: 3px solid #000000;
+            padding: 4rem;
+            margin: 4rem 0;
+            opacity: 0;
+            transform: translateX(-30px);
+            transition: all 0.8s ease;
+        }
+
+        .story-section.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .story-section h3 {
+            font-size: 2.5rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
+        }
+
+        .story-section p {
+            font-size: 1.3rem;
+            line-height: 1.8;
+            color: #333333;
+        }
+
+        footer {
+            padding: 4rem;
+            text-align: center;
+            border-top: 3px solid #000000;
+        }
+
+        footer p {
+            font-size: 1rem;
+            color: #666666;
+        }
+
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 8rem;
+            }
+
+            .content-block h2 {
+                font-size: 3.5rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+            }
+
+            .hero {
+                padding: 6rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 5rem;
+            }
+
+            .color-block {
+                width: 100%;
+                height: 40%;
+            }
+
+            .about-section {
+                padding: 8rem 2rem;
+            }
+
+            .content-block h2 {
+                font-size: 2.5rem;
+            }
+
+            .highlight-box {
+                padding: 3rem 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">SECURELY</a>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="features.html">FEATURES</a></li>
+            <li><a href="download.html">DOWNLOAD</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+            <li><a href="credits.html">CREDITS</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="color-block"></div>
+        <h1>ABOUT</h1>
+    </section>
+
+    <section class="about-section">
+        <div class="content-block">
+            <h2>WHAT IS SECURELY?</h2>
+            <p>Securely is an AI-powered cybersecurity monitoring application that protects you from phishing attacks, malware, and malicious URLs in real-time. Unlike traditional security tools that only protect files or networks, Securely operates at the visual layer - monitoring everything that appears on your screen before you can interact with it.</p>
+            <p>Using advanced OCR (Optical Character Recognition) technology and machine learning, Securely continuously scans your screen, extracts visible text, detects URLs, and analyzes them for threats. When a malicious link or suspicious pattern is detected, you receive an instant alert.</p>
+        </div>
+
+        <div class="highlight-box">
+            <h2>THE ORIGIN STORY</h2>
+            <p><strong>It Started With a Mistake</strong></p>
+            <p>"When I was a kid, I got doxxed. I wasn't technical at the time, and I made a mistake that exposed my personal information online. The fear, the helplessness, the violation of privacy - it changed me forever."</p>
+            <p>That moment defined everything. As a child facing the consequences of a digital threat, I made a promise to myself: I would find a way to protect myself and others.</p>
+        </div>
+
+        <div class="content-block">
+            <h2>YEARS OF SEARCHING</h2>
+            <p>For years, I searched for solutions. I looked at every security tool I could find. VPNs? Too complex. Antivirus software? Too reactive. Browser extensions? Too limited.</p>
+            <p>Nothing felt right. Nothing addressed the real problem: threats appear visually on your screen before you interact with them.</p>
+        </div>
+
+        <div class="story-section">
+            <h3>THE FOURTH OPTION</h3>
+            <p>"What if there was another security tool? Something that wasn't a VPN, wasn't an antivirus, but something completely new - a visual guardian that watches your screen and protects you from what you see?"</p>
+            <p>That's when Securely was born - not as software, but as an idea. A vision of a new category of security that filled the gap between network protection and file protection.</p>
+        </div>
+
+        <div class="content-block">
+            <h2>THE MISSION</h2>
+            <p>Securely isn't just software - it's protection born from experience. It's the tool I wish I had when I was young. It's the guardian I needed when I made that mistake. It's the fourth option that the cybersecurity world was missing.</p>
+            <p><strong>Now, it's here to protect you, and everyone else who doesn't want to experience what I did.</strong></p>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 SECURELY</p>
+    </footer>
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.content-block, .highlight-box, .story-section');
+            sections.forEach(section => observer.observe(section));
+
+            const nav = document.querySelector('nav');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 100) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+
+                const contentBlocks = document.querySelectorAll('.content-block');
+                contentBlocks.forEach((block, index) => {
+                    if (window.pageYOffset > window.innerHeight + (index * 300)) {
+                        block.classList.add('scrolled');
+                    }
+                });
+            });
+        });
+    </script>
+</body>
+</html>

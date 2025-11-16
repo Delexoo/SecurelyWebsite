@@ -1,0 +1,633 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Download - Securely</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, sans-serif;
+            color: #000000;
+            background: #ffffff;
+        }
+
+        nav {
+            padding: 2rem 4rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            position: fixed;
+            top: 0;
+            width: 100%;
+            z-index: 100;
+            background: #ffffff;
+            border-bottom: 10px solid #000000;
+            transition: all 0.3s ease;
+            animation: navSlideDown 0.8s ease-out;
+        }
+
+        @keyframes navSlideDown {
+            from {
+                transform: translateY(-100%);
+                opacity: 0;
+            }
+            to {
+                transform: translateY(0);
+                opacity: 1;
+            }
+        }
+
+        nav.scrolled {
+            padding: 1.5rem 4rem;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+            animation: navPulse 3s ease-in-out infinite;
+        }
+
+        @keyframes navPulse {
+            0%, 100% {
+                border-bottom-width: 10px;
+            }
+            50% {
+                border-bottom-width: 12px;
+            }
+        }
+
+        .logo {
+            font-size: 1.2rem;
+            font-weight: 700;
+            color: #000000;
+            text-decoration: none;
+            letter-spacing: 1px;
+            transition: transform 0.3s ease;
+            animation: logoFloat 4s ease-in-out infinite;
+        }
+
+        @keyframes logoFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-5px);
+            }
+        }
+
+        .logo:hover {
+            transform: scale(1.1) rotate(-2deg);
+            animation: logoBounce 0.5s ease-out;
+        }
+
+        @keyframes logoBounce {
+            0%, 100% {
+                transform: scale(1.1) rotate(-2deg);
+            }
+            50% {
+                transform: scale(1.15) rotate(2deg);
+            }
+        }
+
+        nav ul {
+            list-style: none;
+            display: flex;
+            gap: 3rem;
+            align-items: center;
+        }
+
+        nav a {
+            color: #000000;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.9rem;
+            letter-spacing: 0.5px;
+            position: relative;
+            transition: all 0.3s ease;
+            animation: navLinkFadeIn 1s ease-out;
+            animation-fill-mode: both;
+        }
+
+        @keyframes navLinkFadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(-10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        nav a:nth-child(1) { animation-delay: 0.1s; }
+        nav a:nth-child(2) { animation-delay: 0.2s; }
+        nav a:nth-child(3) { animation-delay: 0.3s; }
+        nav a:nth-child(4) { animation-delay: 0.4s; }
+        nav a:nth-child(5) { animation-delay: 0.5s; }
+        nav a:nth-child(6) { animation-delay: 0.6s; }
+
+        nav a::after {
+            content: '';
+            position: absolute;
+            bottom: -5px;
+            left: 0;
+            width: 0;
+            height: 2px;
+            background: #000000;
+            transition: width 0.3s ease;
+        }
+
+        nav a:hover {
+            transform: translateY(-3px);
+            color: #ff6b6b;
+        }
+
+        nav a:hover::after {
+            width: 100%;
+            height: 3px;
+            background: #ff6b6b;
+        }
+
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            padding: 8rem 4rem;
+        }
+
+        .color-block {
+            position: absolute;
+            left: 0;
+            top: 0;
+            width: 50%;
+            height: 100%;
+            background: #ff6b6b;
+            z-index: 1;
+            animation: slideInLeft 1.5s ease-out, colorBlockPulse 4s ease-in-out infinite 2s, colorBlockShimmer 3s ease-in-out infinite;
+        }
+
+        @keyframes slideInLeft {
+            from {
+                transform: translateX(-100%);
+            }
+            to {
+                transform: translateX(0);
+            }
+        }
+
+        @keyframes colorBlockPulse {
+            0%, 100% {
+                transform: scaleX(1);
+            }
+            50% {
+                transform: scaleX(1.05);
+            }
+        }
+
+        @keyframes colorBlockShimmer {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.85;
+            }
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            animation: fadeInUp 1s ease-out;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(50px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .hero h1 {
+            font-size: 12rem;
+            font-weight: 900;
+            line-height: 0.9;
+            letter-spacing: -6px;
+            color: #000000;
+            margin-bottom: 3rem;
+            animation: heroTextFloat 6s ease-in-out infinite 1.5s, heroTextGlow 3s ease-in-out infinite;
+        }
+
+        @keyframes heroTextFloat {
+            0%, 100% {
+                transform: translateY(0);
+            }
+            50% {
+                transform: translateY(-20px);
+            }
+        }
+
+        @keyframes heroTextGlow {
+            0%, 100% {
+                text-shadow: 0 0 0 rgba(0,0,0,0);
+            }
+            50% {
+                text-shadow: 0 0 30px rgba(255,107,107,0.3);
+            }
+        }
+
+        .download-section {
+            padding: 12rem 4rem;
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+
+        .download-card {
+            background: #000000;
+            color: #ffffff;
+            padding: 6rem 5rem;
+            border: 3px solid #000000;
+            text-align: center;
+            margin-bottom: 6rem;
+            opacity: 0;
+            transform: scale(0.9) rotate(-1deg);
+            transition: all 0.8s ease;
+            position: relative;
+            overflow: hidden;
+            animation: cardBreathe 4s ease-in-out infinite;
+        }
+
+        @keyframes cardBreathe {
+            0%, 100% {
+                transform: scale(0.9) rotate(-1deg);
+            }
+            50% {
+                transform: scale(0.95) rotate(0deg);
+            }
+        }
+
+        .download-card::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(255,255,255,0.1), transparent);
+            animation: cardShine 3s infinite;
+            transform: rotate(45deg);
+        }
+
+        @keyframes cardShine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        .download-card.visible {
+            opacity: 1;
+            transform: scale(1) rotate(0deg);
+            animation: cardPop 0.6s ease-out, cardBreathe 4s ease-in-out infinite 0.6s;
+        }
+
+        @keyframes cardPop {
+            0% {
+                transform: scale(0.8) rotate(-5deg);
+            }
+            50% {
+                transform: scale(1.05) rotate(2deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .download-card:hover {
+            transform: scale(1.02) rotate(1deg);
+            animation: cardHover 0.3s ease-out;
+        }
+
+        @keyframes cardHover {
+            0%, 100% {
+                transform: scale(1.02) rotate(1deg);
+            }
+            50% {
+                transform: scale(1.05) rotate(-1deg);
+            }
+        }
+
+        .download-card h2 {
+            font-size: 4rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            letter-spacing: -2px;
+        }
+
+        .download-card p {
+            font-size: 1.5rem;
+            margin-bottom: 3rem;
+            color: #cccccc;
+        }
+
+        .download-button {
+            display: inline-block;
+            background: #ffffff;
+            color: #000000;
+            padding: 2rem 6rem;
+            text-decoration: none;
+            font-weight: 900;
+            font-size: 1.5rem;
+            letter-spacing: 2px;
+            border: 3px solid #000000;
+            transition: all 0.2s;
+            animation: buttonGlow 2s ease-in-out infinite;
+            position: relative;
+            overflow: hidden;
+        }
+
+        @keyframes buttonGlow {
+            0%, 100% {
+                box-shadow: 0 0 0 rgba(0,0,0,0);
+            }
+            50% {
+                box-shadow: 0 0 25px rgba(255,107,107,0.4);
+            }
+        }
+
+        .download-button::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: #000000;
+            transition: left 0.3s ease;
+            z-index: -1;
+        }
+
+        .download-button:hover {
+            background: #000000;
+            color: #ffffff;
+            transform: scale(1.05) rotate(2deg);
+            animation: buttonPulse 0.5s ease-out;
+        }
+
+        @keyframes buttonPulse {
+            0%, 100% {
+                transform: scale(1.05) rotate(2deg);
+            }
+            50% {
+                transform: scale(1.1) rotate(-2deg);
+            }
+        }
+
+        .download-button:hover::before {
+            left: 0;
+        }
+
+        .info-section {
+            background: #f5f5f5;
+            border: 3px solid #000000;
+            padding: 4rem;
+            margin-bottom: 4rem;
+            opacity: 0;
+            transform: translateY(30px) rotate(-1deg);
+            transition: all 0.8s ease;
+            position: relative;
+            overflow: hidden;
+            animation: sectionSway 6s ease-in-out infinite;
+        }
+
+        @keyframes sectionSway {
+            0%, 100% {
+                transform: translateY(0) rotate(-1deg);
+            }
+            50% {
+                transform: translateY(-3px) rotate(0deg);
+            }
+        }
+
+        .info-section::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: linear-gradient(45deg, transparent, rgba(0,0,0,0.05), transparent);
+            animation: sectionShine 3s infinite;
+            transform: rotate(45deg);
+        }
+
+        @keyframes sectionShine {
+            0% {
+                transform: translateX(-100%) translateY(-100%) rotate(45deg);
+            }
+            100% {
+                transform: translateX(100%) translateY(100%) rotate(45deg);
+            }
+        }
+
+        .info-section.visible {
+            opacity: 1;
+            transform: translateY(0) rotate(0deg);
+            animation: sectionPop 0.6s ease-out, sectionSway 6s ease-in-out infinite 0.6s;
+        }
+
+        @keyframes sectionPop {
+            0% {
+                transform: scale(0.8) rotate(-3deg);
+            }
+            50% {
+                transform: scale(1.05) rotate(2deg);
+            }
+            100% {
+                transform: scale(1) rotate(0deg);
+            }
+        }
+
+        .info-section:hover {
+            transform: translateY(-5px) scale(1.01) rotate(1deg);
+        }
+
+        .info-section h3 {
+            font-size: 3rem;
+            font-weight: 900;
+            margin-bottom: 2rem;
+            letter-spacing: -1px;
+        }
+
+        .info-section ul {
+            list-style: none;
+        }
+
+        .info-section li {
+            font-size: 1.3rem;
+            padding: 1rem 0;
+            border-bottom: 2px solid #000000;
+            color: #333333;
+        }
+
+        footer {
+            padding: 4rem;
+            text-align: center;
+            border-top: 3px solid #000000;
+            animation: footerSlide 6s ease-in-out infinite;
+        }
+
+        @keyframes footerSlide {
+            0%, 100% {
+                transform: translateX(0);
+            }
+            50% {
+                transform: translateX(10px);
+            }
+        }
+
+        footer p {
+            font-size: 1rem;
+            color: #666666;
+            animation: footerTextPulse 2s ease-in-out infinite;
+        }
+
+        @keyframes footerTextPulse {
+            0%, 100% {
+                opacity: 1;
+            }
+            50% {
+                opacity: 0.7;
+            }
+        }
+
+        @media (max-width: 1024px) {
+            .hero h1 {
+                font-size: 8rem;
+            }
+
+            .download-card h2 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            nav {
+                padding: 1.5rem 2rem;
+                flex-direction: column;
+                gap: 1rem;
+            }
+
+            nav ul {
+                gap: 1.5rem;
+                flex-wrap: wrap;
+            }
+
+            .hero {
+                padding: 6rem 2rem;
+            }
+
+            .hero h1 {
+                font-size: 5rem;
+            }
+
+            .color-block {
+                width: 100%;
+                height: 40%;
+            }
+
+            .download-section {
+                padding: 8rem 2rem;
+            }
+
+            .download-card {
+                padding: 4rem 3rem;
+            }
+
+            .info-section h3 {
+                font-size: 2rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <nav>
+        <a href="index.html" class="logo">SECURELY</a>
+        <ul>
+            <li><a href="index.html">HOME</a></li>
+            <li><a href="features.html">FEATURES</a></li>
+            <li><a href="download.html">DOWNLOAD</a></li>
+            <li><a href="about.html">ABOUT</a></li>
+            <li><a href="contact.html">CONTACT</a></li>
+            <li><a href="credits.html">CREDITS</a></li>
+        </ul>
+    </nav>
+
+    <section class="hero">
+        <div class="color-block"></div>
+        <div class="hero-content">
+            <h1>DOWNLOAD</h1>
+        </div>
+    </section>
+
+    <section class="download-section">
+        <div class="download-card">
+            <h2>WINDOWS</h2>
+            <p>Windows 10 & 11 Compatible</p>
+            <a href="#" class="download-button">DOWNLOAD NOW</a>
+        </div>
+
+        <div class="info-section">
+            <h3>REQUIREMENTS</h3>
+            <ul>
+                <li>Windows 10 or Windows 11</li>
+                <li>4 GB RAM minimum (8 GB recommended)</li>
+                <li>500 MB free disk space</li>
+                <li>Internet connection</li>
+                <li>Administrator privileges</li>
+            </ul>
+        </div>
+    </section>
+
+    <footer>
+        <p>&copy; 2024 SECURELY</p>
+    </footer>
+    <script>
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -100px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        document.addEventListener('DOMContentLoaded', () => {
+            const sections = document.querySelectorAll('.download-card, .info-section');
+            sections.forEach(section => observer.observe(section));
+
+            const nav = document.querySelector('nav');
+            window.addEventListener('scroll', () => {
+                if (window.pageYOffset > 100) {
+                    nav.classList.add('scrolled');
+                } else {
+                    nav.classList.remove('scrolled');
+                }
+            });
+        });
+    </script>
+</body>
+</html>
